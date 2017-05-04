@@ -19,6 +19,8 @@
 		</h2>
 	</c:if>
 	</sec:authorize>
-	<A href ="/translator">Translator</A>
+	<form action="/translator" method="get" >
+		<input type="submit" value="Translator" />
+	</form>
 </body>
 </html>
