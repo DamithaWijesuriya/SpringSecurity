@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - Test@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="Test">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="damithadb"/>
+    <schema id="3" name="db_school"/>
+    <schema id="4" name="information_schema"/>
+    <schema id="5" name="loginregister"/>
+    <schema id="6" name="mysql"/>
+    <schema id="7" name="performance_schema"/>
+    <schema id="8" name="readerbuddy"/>
+    <schema id="9" name="stock_management_system"/>
+    <schema id="10" name="sys"/>
+    <table id="11" parent="1" name="user_roles"/>
+    <table id="12" parent="1" name="users"/>
+    <column id="13" parent="11" name="user_role_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="14" parent="11" name="username">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="15" parent="11" name="role">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <index id="16" parent="11" name="fk_username_idx">
+      <columns>username</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="17" parent="11" name="uni_username_role">
+      <columns>role
+username</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="18" parent="11" name="PRIMARY">
+      <columns>user_role_id</columns>
+      <primary>1</primary>
+    </key>
+    <key id="19" parent="11" name="uni_username_role">
+      <columns>role
+username</columns>
+      <underlying-index>uni_username_role</underlying-index>
+    </key>
+    <foreign-key id="20" parent="11" name="fk_username">
+      <columns>username</columns>
+      <ref-key>~.users.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="21" parent="12" name="username">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="22" parent="12" name="password">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="23" parent="12" name="enabled">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+      <default-expression>&apos;1&apos;</default-expression>
+    </column>
+    <key id="24" parent="12" name="PRIMARY">
+      <columns>username</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
