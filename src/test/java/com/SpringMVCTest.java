@@ -46,7 +46,11 @@ public class SpringMVCTest {
 
 
     //Test Cases
-
+    @Test
+    public void welcome() throws Exception{
+        mockMvc.perform(get("/welcome.jsp").accept(MediaType.TEXT_PLAIN))
+                .andDo(print());
+    }
     @Test
     public void testLogin() throws Exception{
         mockMvc.perform(get("/login.jsp").accept(MediaType.TEXT_PLAIN))
