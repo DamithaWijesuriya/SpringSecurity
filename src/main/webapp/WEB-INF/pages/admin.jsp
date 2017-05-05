@@ -12,12 +12,31 @@
 			value="${_csrf.token}" />
 		<%--<input type="submit" value="Logout" />--%>
 	</form>
+		<%--<script>
+			function formSubmit() {
+				document.getElementById("logoutForm").submit();
+
+			}
+		</script>
 
 	<c:if test="${pageContext.request.userPrincipal.name != null}">
 		<h2>
 			Welcome : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()">Logout</a>
 		</h2>
-	</c:if>
+	</c:if>--%>
+		<script>
+			function formSubmit() {
+				document.getElementById("logoutForm").submit();
+
+			}
+		</script>
+
+		<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<h2>
+				User : ${pageContext.request.userPrincipal.name} | <a
+					href="javascript:formSubmit()"> Logout</a>
+			</h2>
+		</c:if>
 	</sec:authorize>
 	<form action="/translator" method="get">
 		<input type="submit" value="Translator"/>

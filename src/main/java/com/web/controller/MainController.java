@@ -1,7 +1,7 @@
 package com.web.controller;
 
-import com.translator.Languages;
 import com.translator.Translate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
-    Translate translate = new Translate();
+    @Autowired
+    Translate translate;
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView DefaultPage() {
@@ -91,10 +92,10 @@ public class MainController {
 
     }
 
+    @Autowired
     @RequestMapping(value = "/translator", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView TranslatePage() {
         ModelAndView model = new ModelAndView();
-        Languages languages = new Languages();
         model.addObject("languages", translate.getLanguages().getDirs());
 
         model.setViewName("translator");

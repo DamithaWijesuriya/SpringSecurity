@@ -1,6 +1,9 @@
 package com.translator;
 
 import com.google.gson.Gson;
+import com.web.controller.MainController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by hsenid on 5/4/17.
  */
+@Service
 public class Translate {
 
 
@@ -23,7 +27,7 @@ public class Translate {
     public Languages getLanguages() {
         try {
 
-            URL url = new URL("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765&format=json");
+            URL url = new URL("https://translate.yandex.net/api/v1.5/tr.json/getLangs?ui=en&key=trnsl.1.1.20170503T091049Z.71525def9ab833ab.c8ab2a94ef606d3d378564c7e3e1536a56b45e40");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
