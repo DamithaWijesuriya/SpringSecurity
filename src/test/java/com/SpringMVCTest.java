@@ -15,9 +15,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -30,47 +30,47 @@ public class SpringMVCTest {
     private MockMvc mockMvc;
 
     @Before
-    public void init(){
+    public void init() {
         this.mockMvc = webAppContextSetup(ctx).build();
     }
 
-
-
-    @Configuration
-    public static class TestConfig{
-        @Bean
-        public MainController loginController(){
-            return new MainController();
-        }
-    }
-
-
     //Test Cases
     @Test
-    public void welcome() throws Exception{
+    public void welcome() throws Exception {
         mockMvc.perform(get("/welcome.jsp").accept(MediaType.TEXT_PLAIN))
                 .andDo(print());
     }
+
     @Test
-    public void testLogin() throws Exception{
+    public void testLogin() throws Exception {
         mockMvc.perform(get("/login.jsp").accept(MediaType.TEXT_PLAIN))
                 .andDo(print());
     }
+
     @Test
-    public void testAdmin() throws Exception{
+    public void testAdmin() throws Exception {
         mockMvc.perform(get("/admin.jsp").accept(MediaType.TEXT_PLAIN))
                 .andDo(print());
     }
 
     @Test
-    public void testHello() throws Exception{
+    public void testHello() throws Exception {
         mockMvc.perform(get("/hello.jsp").accept(MediaType.TEXT_PLAIN))
                 .andDo(print());
     }
+
     @Test
-    public void testTranslate() throws Exception{
+    public void testTranslate() throws Exception {
         mockMvc.perform(get("/translator.jsp").accept(MediaType.TEXT_PLAIN))
                 .andDo(print());
+    }
+
+    @Configuration
+    public static class TestConfig {
+        @Bean
+        public MainController loginController() {
+            return new MainController();
+        }
     }
 
 }
