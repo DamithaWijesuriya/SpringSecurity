@@ -18,7 +18,7 @@ public class MainController {
     Translate translate = new Translate();
 
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
-    public ModelAndView defaultPage() {
+    public ModelAndView DefaultPage() {
 
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Spring Security Login Form - Database Authentication");
@@ -29,7 +29,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage() {
+    public ModelAndView AdminPage() {
 
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Spring Security Login Form - Database Authentication");
@@ -41,7 +41,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/hello**", method = RequestMethod.GET)
-    public ModelAndView userPage() {
+    public ModelAndView UserPage() {
 
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Spring Security Login Form - Database Authentication");
@@ -53,7 +53,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+    public ModelAndView Login(@RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
 
         ModelAndView model = new ModelAndView();
@@ -72,7 +72,7 @@ public class MainController {
 
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
+    public ModelAndView AccesssDenied() {
 
         ModelAndView model = new ModelAndView();
 
@@ -86,13 +86,13 @@ public class MainController {
 
         }
 
-        model.setViewName("403");
+        model.setViewName("403/");
         return model;
 
     }
 
     @RequestMapping(value = "/translator", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView translatePage() {
+    public ModelAndView TranslatePage() {
         ModelAndView model = new ModelAndView();
         Languages languages = new Languages();
         model.addObject("languages", translate.getLanguages().getDirs());
