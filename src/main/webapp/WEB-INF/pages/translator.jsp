@@ -11,11 +11,11 @@
     <c:forEach var="item" items="${list}">
         <c:if test="${item!=param.item}">
             <c:if test="${list2!=''}">
-                <c:set var="list2" value="${list2}," />
+                <c:set var="list2" value="${list2},"/>
             </c:if>
-            </c:if>
+        </c:if>
     </c:forEach>
-    </c:if>
+</c:if>
 <html>
 <head>
     <title>Translater</title>
@@ -28,11 +28,11 @@
     </tr>
     <tr>
         <td>OutPutText:</td>
-        <td><input type='text' name='OutPutText' /></td>
+        <td><input type='text' name='OutPutText'/></td>
     </tr>
     <tr>
         <td colspan='2'><input name="submit" type="submit"
-                               value="submit" /></td>
+                               value="submit"/></td>
     </tr>
     <select name="toLanguage">
         <c:forEach items="${languages}" var="language">
