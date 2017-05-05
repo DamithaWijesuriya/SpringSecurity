@@ -14,13 +14,13 @@ import java.util.ArrayList;
 public class Translate {
 
 
+    static final String PostUrl = "https://translate.yandex.net/api/v1.5/tr/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765";
+    public ArrayList<String> languages;
     Gson gson = new Gson();
     Languages lang;
     Letters convertedWord;
-    static final String PostUrl = "https://translate.yandex.net/api/v1.5/tr/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765";
-    public ArrayList<String> languages;
 
-    public Languages getLanguages(){
+    public Languages getLanguages() {
         try {
 
             URL url = new URL("https://translate.yandex.net/api/v1.5/tr.json/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765&format=json");
@@ -36,16 +36,16 @@ public class Translate {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            lang = gson.fromJson(br.readLine(),Languages.class);
+            lang = gson.fromJson(br.readLine(), Languages.class);
             conn.disconnect();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return lang;
     }
 
-    public Letters translate(String inputLang, String outputLang, String wordToConvert){
+    public Letters translate(String inputLang, String outputLang, String wordToConvert) {
         try {
 
             URL url = new URL("https://translate.yandex.net/api/v1.5/tr.json/translate ?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765&lang" +
@@ -65,7 +65,7 @@ public class Translate {
             convertedWord = gson.fromJson(br.readLine(), Letters.class);
             conn.disconnect();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return convertedWord;

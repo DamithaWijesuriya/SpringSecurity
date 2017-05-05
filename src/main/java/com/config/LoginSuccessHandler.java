@@ -3,12 +3,6 @@ package com.config;
 /**
  * Created by hsenid on 5/4/17.
  */
-import java.io.IOException;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,8 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     protected final Log logger = LogFactory.getLog(this.getClass());
@@ -50,13 +47,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String targetUrl = "";
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
-            switch(grantedAuthority.getAuthority()){
+            switch (grantedAuthority.getAuthority()) {
                 case "ROLE_USER":
-                    targetUrl="/hello";
+                    targetUrl = "/hello";
                     //Assign your url here
                     break;
                 case "ROLE_ADMIN":
-                   targetUrl= "/admin";
+                    targetUrl = "/admin";
                     //Assign your URL here
                     break;
             }
