@@ -1,28 +1,51 @@
+/*
 package com.translator;
 
-import com.google.gson.Gson;
-import com.web.controller.MainController;
-import org.springframework.beans.factory.annotation.Autowired;
+//import com.google.gson.Gson;
+import javassist.bytecode.stackmap.TypeData;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.WebUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+
+*/
 /**
  * Created by hsenid on 5/4/17.
- */
+ *//*
+
 @Service
 public class Translate {
-
+    private static final Logger logger = Logger.getLogger( TypeData.ClassName.class.getName() );
 
     static final String PostUrl = "https://translate.yandex.net/api/v1.5/tr/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765";
     public ArrayList<String> languages;
-    Gson gson = new Gson();
+    //Gson gson = new Gson();
     Languages lang;
     Letters convertedWord;
+
+*/
+/*
+
+    RestTemplate restTemplate = new RestTemplate();
+   String quote = restTemplate.getForObject("https://translate.yandex.net/api/v1.5/tr/getLangs?key=trnsl.1.1.20170503T091519Z.9f30c24402100dfb.91f7ddaca07e07cddb27fd1cd769dd2b43d5c765", String.class);
+    JSONParser parser = new JSONParser();
+    JSONObject json = (JSONObject) parser.parse(quote);
+*//*
+
+
 
     public Languages getLanguages() {
         try {
@@ -40,11 +63,11 @@ public class Translate {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            lang = gson.fromJson(br.readLine(), Languages.class);
+            //lang = gson.fromJson(br.readLine(), Languages.class);
             conn.disconnect();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info(String.valueOf(e));
         }
         return lang;
     }
@@ -66,12 +89,13 @@ public class Translate {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            convertedWord = gson.fromJson(br.readLine(), Letters.class);
+            //convertedWord = gson.fromJson(br.readLine(), Letters.class);
             conn.disconnect();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info(String.valueOf(e));
         }
         return convertedWord;
     }
 }
+*/

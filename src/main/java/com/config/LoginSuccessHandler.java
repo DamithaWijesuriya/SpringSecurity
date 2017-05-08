@@ -56,6 +56,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                     targetUrl = "/admin";
                     //Assign your URL here
                     break;
+                default:
             }
         }
         return targetUrl;

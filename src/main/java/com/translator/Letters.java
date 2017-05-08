@@ -1,8 +1,11 @@
+/*
 package com.translator;
 
+*/
 /**
  * Created by hsenid on 5/4/17.
- */
+ *//*
+
 public class Letters {
     private String[] ouotput;
 
@@ -14,3 +17,4 @@ public class Letters {
         this.ouotput = ouotput;
     }
 }
+*/

@@ -1,8 +1,11 @@
+/*
 package com.translator;
 
+*/
 /**
  * Created by hsenid on 5/4/17.
- */
+ *//*
+
 public class Languages {
 
     private String[] dirs;
@@ -15,3 +18,4 @@ public class Languages {
         this.dirs = dirs;
     }
 }
+*/
