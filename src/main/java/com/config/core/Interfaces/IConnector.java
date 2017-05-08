@@ -1,11 +1,11 @@
 package com.config.core.Interfaces;
 
 
-import org.json.simple.JSONObject;
+import java.util.HashMap;
 
 public interface IConnector {
 
-    public JSONObject getAllLanguagesList();
+    public HashMap<String, Object> getAllLanguagesList();
 
 }
 

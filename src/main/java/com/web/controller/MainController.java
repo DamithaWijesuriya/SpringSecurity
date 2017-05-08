@@ -1,26 +1,33 @@
 package com.web.controller;
 /*
 import com.translator.Translate;*/
+
+import com.config.core.ModifiedUrlGenerator;
 import com.config.core.Servises.ConnectorRestTemplate;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class MainController {
     @Autowired
     ConnectorRestTemplate connectorRestTemplate;
+
+    JSONParser jsonParser = new JSONParser();
     /*@Autowired
     Translate translate;
 */
@@ -107,16 +114,49 @@ public class MainController {
         model.setViewName("translator");
         return model;
     }*/
-
-    @RequestMapping(value = "/translate", method = RequestMethod.GET)
-    public String sendTranslateView(ModelMap model) {
+/*
+    */@RequestMapping(value = "/translator", method = RequestMethod.GET)
+    public ModelAndView sendTranslateView() {
+       ModelAndView model = new ModelAndView();
+       model.addObject("languages",connectorRestTemplate.getAllLanguagesList());
         // logger.error("test");
-        return "translate";
+        model.setViewName("translator");
+       return model;
+    }
+
+    /*@RequestMapping(value = "/convert", method = RequestMethod.GET)
+    public JSONObject convert(HttpServletRequest request) throws ParseException {
+        String textToTranslate = request.getParameter("text");
+        String from = request.getParameter("fromLang");
+        String to = request.getParameter("toLang");
+
+        JSONObject json = (JSONObject) jsonParser.parse(connectorRestTemplate.getTranslate(textToTranslate, from, to));
+
+    *//*    ModelAndView model = new ModelAndView();
+        model.addObject("languages",modifiedUrlGenerator.modifiedUrl(textToTranslate, from, to));
+        // logger.error("test");
+        model.setViewName("translator");
+        *//*
+        return json;
+    }*/
+
+    @RequestMapping(value = "/convert", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject getTranslate(HttpServletRequest request) throws ParseException {
+
+        String fromLanguage = request.getParameter("fromLang");
+        String toLanguage = request.getParameter("toLang");
+        String textToTranslate = request.getParameter("text");
+
+//        logger.info(fromLanguage+toLanguage+textToTranslate);
+
+        JSONObject reply = (JSONObject) jsonParser.parse(connectorRestTemplate.getTranslate(textToTranslate, fromLanguage, toLanguage));
+        return reply;
     }
 
     @RequestMapping(value = "/sendAllLanguages", method = RequestMethod.GET)
     @ResponseBody
     public JSONObject getTranslated() {
-        return connectorRestTemplate.getAllLanguagesList();
+        return (JSONObject) connectorRestTemplate.getAllLanguagesList();
     }
 }
