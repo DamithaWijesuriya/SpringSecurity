@@ -1,23 +1,29 @@
 package com.web.controller;
-
-import com.translator.Translate;
+/*
+import com.translator.Translate;*/
+import com.config.core.Servises.ConnectorRestTemplate;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class MainController {
     @Autowired
+    ConnectorRestTemplate connectorRestTemplate;
+    /*@Autowired
     Translate translate;
-
+*/
     @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView DefaultPage() {
 
@@ -92,7 +98,7 @@ public class MainController {
 
     }
 
-    @Autowired
+   /* @Autowired
     @RequestMapping(value = "/translator", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView TranslatePage() {
         ModelAndView model = new ModelAndView();
@@ -100,7 +106,17 @@ public class MainController {
 
         model.setViewName("translator");
         return model;
+    }*/
+
+    @RequestMapping(value = "/translate", method = RequestMethod.GET)
+    public String sendTranslateView(ModelMap model) {
+        // logger.error("test");
+        return "translate";
     }
 
-
+    @RequestMapping(value = "/sendAllLanguages", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject getTranslated() {
+        return connectorRestTemplate.getAllLanguagesList();
+    }
 }
