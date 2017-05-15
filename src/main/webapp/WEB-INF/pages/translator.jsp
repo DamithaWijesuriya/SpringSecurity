@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            alert("test");
+//            alert("test");
             /*$.ajax({
              type: "GET",
              url:"sendAllLanguages",
@@ -32,7 +32,7 @@
              });
              }
              });*/
-            $("button").click(function(e) {
+           /* $("button").click(function(e) {
                 var fromLang =$("#fromLanguage").val();
                 var toLang =$("#toLanguage").val();
                 var textToTranslate =$("#textToTranslate").val();
@@ -51,6 +51,29 @@
                         input.val(input.val() + reply.text);
                     }
                 });
+            });*/
+            $("button").click(function(e) {
+                var fromLang =$("#fromLanguage").val();
+                var toLang =$("#toLanguage").val();
+                var textToTranslate =$("#textToTranslate").val();
+//                alert(fromLang+toLang+textToTranslate);
+
+                $.ajax({
+                    type: "GET",
+                    url:"convert",
+                    data: {
+                        fromLang: fromLang,
+                        toLang: toLang,
+                        text: textToTranslate
+                    },
+                    dataType: "json",
+                    success: function (reply) {
+                        $("#translated").val("");
+                        var input = $("#translated");
+                        input.val(input.val() + reply.text);
+                    }
+                });
+
             });
         });
     </script>
@@ -62,21 +85,21 @@
 <table>
     <tr>
         <td>InputText:</td>
-        <td><input type='text' name='InputText'></td>
+        <td><input type='text' name='InputText' id="textToTranslate"></td>
     </tr>
     <tr>
         <td>OutPutText:</td>
-        <td><input type='text' id="translated" name='OutPutText'/></td>
+        <td><input type='text' id="translated" name='OutPutText' /></td>
     </tr>
     <tr>
         <td colspan='2'><button>Translate</button></td>
     </tr>
-    <select name="fromLanguage">
+    <select name="fromLanguage" id="fromLanguage">
         <c:forEach items="${languages}" var="language">
             <option value="<c:out value="${language.key}" />"><c:out value="${language.value}"/></option>
         </c:forEach>
     </select>
-    <select name="toLanguage">
+    <select name="toLanguage" id="toLanguage">
         <c:forEach items="${languages}" var="languages">
             <option value="<c:out value="${languages.key}" />"><c:out value="${languages.value}"/></option>
         </c:forEach>

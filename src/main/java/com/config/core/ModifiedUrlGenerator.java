@@ -41,6 +41,7 @@ public class ModifiedUrlGenerator {
 
         apiCall.append(urlWithKey);
         apiCall.append("&text=");
+        //apiCall.append(fromText);
         apiCall.append(this.modifiedStr(fromText));
         apiCall.append("&lang=");
         apiCall.append(from);

@@ -1,8 +1,6 @@
 package com.config.core.Servises;
 
 import com.config.core.Interfaces.IConnector;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -10,6 +8,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -19,11 +18,91 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-/**
- * Created by hsenid on 5/9/17.
- */
+@Service
 public class ConnectHTTPClient implements IConnector {
-    static final String PostUrl="https://translate.yandex.net/api/v1.5/tr.json/getLangs?ui=en&key=trnsl.1.1.20170503T091049Z.71525def9ab833ab.c8ab2a94ef606d3d378564c7e3e1536a56b45e40";
+
+    PropertyFileReader properties = new PropertyFileReader();
+
+
+    final String PostUrl = properties.getproperty("languagelist.url", "system.properties");
+
+
+    //for testing
+    public static void main(String[] args) throws Exception {
+        /** for testing purpose of this class*/
+        ConnectHTTPClient client = new ConnectHTTPClient();
+        String ex2 = client.translate_text("en", "ru", "Hello");
+        System.out.println(ex2);
+
+        System.out.println("TRANS DONE");
+    }
+
+
+    public HashMap<String, String> getLangs() throws Exception {
+
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+
+        HttpPost request = new HttpPost(PostUrl);
+
+
+        CloseableHttpResponse response = client.execute(request);
+
+        InputStream input = response.getEntity().getContent();
+
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = dbf.newDocumentBuilder();
+
+        Document doc = builder.parse(input);
+
+        NodeList nameNodesList = doc.getElementsByTagName("Item");
+
+        HashMap<String, String> listValues = new HashMap<String, String>();
+
+        for (int i = 0; i < nameNodesList.getLength(); i++) {
+
+            String key = nameNodesList.item(i).getAttributes().getNamedItem("key").getNodeValue();
+            String value = nameNodesList.item(i).getAttributes().getNamedItem("value").getNodeValue();
+            listValues.put(key, value);
+
+        }
+
+        return listValues;
+
+    }
+
+    public String translate_text(String o_lan, String t_lan, String text_input) throws Exception {
+
+
+        String output;
+
+        String url = properties.getproperty("translate.url", "system.properties");
+
+        /** URL sent to the API to get the string translated*/
+        final String transUrl = url + o_lan + "-" + t_lan + "&text=" + text_input;
+
+        /**send the request to the server thorough HttpClient*/
+        org.apache.http.client.HttpClient httpClient_translate = new DefaultHttpClient();
+        HttpGet request = new HttpGet(transUrl);
+        org.apache.http.HttpResponse response2 = httpClient_translate.execute(request);
+
+
+        /**Get the response*/
+        InputStream input2 = response2.getEntity().getContent();
+
+        /**creating DOM object*/
+        DocumentBuilderFactory dbf2 = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder2 = dbf2.newDocumentBuilder();
+        Document doc = builder2.parse(input2);
+
+        NodeList text_tag = doc.getElementsByTagName("text");
+
+        /** get the string value of the content in the text TAG*/
+        output = String.valueOf(text_tag.item(0).getTextContent());
+
+        return output;
+    }
+
 
     @Override
     public String getTranslate(String textToTranslate, String fromLanguage, String toLanguage) throws IOException, ParseException {
@@ -31,46 +110,7 @@ public class ConnectHTTPClient implements IConnector {
     }
 
     @Override
-    public HashMap<String, String> getAllLanguagesList() throws Exception {
-
-
-        CloseableHttpClient client = HttpClientBuilder.create().build();
-        //send the request
-        HttpPost request = new HttpPost(PostUrl);
-
-        //excute the request to obtain the response
-        CloseableHttpResponse response = client.execute(request);
-
-        /** Get the response */
-        InputStream input = response.getEntity().getContent();
-
-        DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder=documentBuilderFactory.newDocumentBuilder();
-        Document document=documentBuilder.parse(input);
-        NodeList nodeList=document.getElementsByTagName("Item");
-
-
-        HashMap<String,String> valuesList=new HashMap<String,String>();
-        for(int i=0;i<nodeList.getLength();i++)
-        {
-            String key=nodeList.item(i).getAttributes().getNamedItem("Key").getNodeValue();
-            String value=nodeList.item(i).getAttributes().getNamedItem("value").getNodeValue();
-            valuesList.put(key,value);
-        }
-
-return valuesList;
-    }
-
-
-    public String translateText(String FromLanguage,String ToLanguage,String InputText) throws Exception
-    {
-       String OutPut;
-        String translateURL="https://translate.yandex.net/api/v1.5/tr.json/getLangs?ui=en&key=trnsl.1.1.20170503T091049Z.71525def9ab833ab.c8ab2a94ef606d3d378564c7e3e1536a56b45e40";
-        HttpClient httpClient=new DefaultHttpClient();
-        HttpGet request=new HttpGet(translateURL);
-        HttpResponse httpResponse=httpClient.execute(request);
-
-
-        return ;
+    public HashMap<String, String> getAllLanguagesList() {
+        return null;
     }
 }
